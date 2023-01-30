@@ -11,13 +11,13 @@
 <a href="#"><img src="https://img.shields.io/badge/-PostgreSQL-336791?style=for-the-badge&logo=PostgreSQL&logoColor=white"></a>
 </p>
 
-# 📁 Collection: Pokemon
+# 📁 Collection: Products
 
 
-## End-point: Get pokemon
+## End-point: Get products
 ### Method: GET
 >```
->http://localhost:3000/api/pokemon?limit=6&offset=1
+>http://localhost:3000/api/products?limit=6&offset=1
 >```
 ### Query Params
 
@@ -30,74 +30,113 @@
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
-## End-point: Get pokemon/:term
+## End-point: Get product/:term
 ### Method: GET
 >```
->http://localhost:3000/api/pokemon/63cfca329c1ec789116ec596
->http://localhost:3000/api/pokemon/bulbasur
->http://localhost:3000/api/pokemon/1
+>http://localhost:3000/api/products/326fb8fd-b3bd-41d2-9130-ba007a8f24c2
+>http://localhost:3000/api/products/Alexis' shirt 2
+>http://localhost:3000/api/products/alexis_shirt_2
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
-## End-point: Post pokemon
+## End-point: Post product
 ### Method: POST
 >```
->http://localhost:3000/api/pokemon
+>http://localhost:3000/api/products
 >```
-### Body (**raw**)
-
+### Body
+Body:
 ```json
 {
-    "name": "charmander",
-    "no": 4
+   "title": "Alexis' Shirt 2",
+   "sizes": ["S", "M", "L"],
+   "gender": "men"
+}
+```
+--- 
+
+Response:
+```json
+{
+   "title": "Alexis' Shirt 7",
+   "sizes": [
+      "S",
+      "M",
+      "L"
+   ],
+   "gender": "men",
+   "slug": "alexis_shirt_7",
+   "description": null,
+   "id": "ee7c7af8-63b9-48a7-a417-fa1ca3f57ee6",
+   "price": 0,
+   "stock": 0,
+   "tags": []
 }
 ```
 
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
-## End-point: Patch pokemon/:term
+## End-point: Patch product/:id
 ### Method: PATCH
 >```
->http://localhost:3000/api/pokemon/63cfca329c1ec789116ec596
->http://localhost:3000/api/pokemon/bulbasur
->http://localhost:3000/api/pokemon/1
+>http://localhost:3000/api/products/63cfca329c1ec789116ec596
 >```
-### Body (**raw**)
+### Body
 
 ```json
 {
-    "name": "bulbasur",
-    "no": 1
+   "title": "Alexis' Shirt 2",
+   "description": "This is an example of a description",
+   "slug": "Alexis Shirt 2",
+   "price": 100,
+   "stock": 10,
+   "sizes": [
+      "SM",
+      "S",
+      "M",
+      "L"
+   ],
+   "gender": "men",
+   "tags": [
+      "tag 1",
+      "tag 2"
+   ]
 }
 ```
 
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
-## End-point: Delete pokemon/:id
+## End-point: Delete product/:id
 ### Method: DELETE
 >```
->http://localhost:3000/api/pokemon/63d05c15e9af67f9838506d5
+>http://localhost:3000/api/products/326fb8fd-b3bd-41d2-9130-ba007a8f24c2
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
-## End-point: Seed
-### Method: GET
->```
->http://localhost:3000/api/seed
->```
+[//]: # (## End-point: Seed)
 
-⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
+[//]: # (### Method: GET)
 
+[//]: # (>```)
+
+[//]: # (>http://localhost:3000/api/seed)
+
+[//]: # (>```)
+
+[//]: # ()
+[//]: # (⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃)
+
+[//]: # ()
 ## Run in development
 
 1. Clone the repository
 
    ```bash
-   $ git clone https://github.com/alexxispn/nest-pokedex.git
+   $ git clone https://github.com/alexxispn/teslo-shop.git
    ```
 
 2. Install NestJS CLI
@@ -132,47 +171,76 @@
    $ pnpm run start:dev
    ```
 
-8. Recreate the data with the seed
+[//]: # (8. Recreate the data with the seed)
 
-   ```bash
-   $ http://localhost:3000/api/seed
-   ```
+[//]: # ()
+[//]: # (   ```bash)
 
-## Run in production
+[//]: # (   $ http://localhost:3000/api/seed)
 
-1. Clone the repository
+[//]: # (   ```)
 
-   ```bash
-   $ git clone
-    ```
+[//]: # ()
+[//]: # (## Run in production)
 
-2. Install NestJS CLI
+[//]: # ()
+[//]: # (1. Clone the repository)
 
-    ```bash
-    $ pnpm add -g @nestjs/cli
-    ```
+[//]: # ()
+[//]: # (   ```bash)
 
-3. Install dependencies
+[//]: # (   $ git clone)
 
-    ```bash
-    $ pnpm install
-    ```
+[//]: # (    ```)
 
-4. Run the database
+[//]: # ()
+[//]: # (2. Install NestJS CLI)
 
-    ```bash
-    $ docker-compose up -d
-    ```
+[//]: # ()
+[//]: # (    ```bash)
 
-5. Clone the file `.env.example` and rename it to `.env.prod`
+[//]: # (    $ pnpm add -g @nestjs/cli)
 
-    ```bash
-    $ cp .env.example .env.prod
-    ```
+[//]: # (    ```)
 
-6. Set the environment variables
-7. Build the image
+[//]: # ()
+[//]: # (3. Install dependencies)
 
-    ```bash
-    $ docker compose -f docker-compose.prod.yaml --env-file .env.prod up --build
-    ```
+[//]: # ()
+[//]: # (    ```bash)
+
+[//]: # (    $ pnpm install)
+
+[//]: # (    ```)
+
+[//]: # ()
+[//]: # (4. Run the database)
+
+[//]: # ()
+[//]: # (    ```bash)
+
+[//]: # (    $ docker-compose up -d)
+
+[//]: # (    ```)
+
+[//]: # ()
+[//]: # (5. Clone the file `.env.example` and rename it to `.env.prod`)
+
+[//]: # ()
+[//]: # (    ```bash)
+
+[//]: # (    $ cp .env.example .env.prod)
+
+[//]: # (    ```)
+
+[//]: # ()
+[//]: # (6. Set the environment variables)
+
+[//]: # (7. Build the image)
+
+[//]: # ()
+[//]: # (    ```bash)
+
+[//]: # (    $ docker compose -f docker-compose.prod.yaml --env-file .env.prod up --build)
+
+[//]: # (    ```)
