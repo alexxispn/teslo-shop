@@ -117,20 +117,20 @@ Response:
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
-[//]: # (## End-point: Seed)
+## End-point: Seed
 
-[//]: # (### Method: GET)
+### Method: GET
 
-[//]: # (>```)
+```
 
-[//]: # (>http://localhost:3000/api/seed)
+http://localhost:3000/api/seed
 
-[//]: # (>```)
+```
 
-[//]: # ()
-[//]: # (⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃)
 
-[//]: # ()
+⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
+
+
 ## Run in development
 
 1. Clone the repository
@@ -171,76 +171,97 @@ Response:
    $ pnpm run start:dev
    ```
 
-[//]: # (8. Recreate the data with the seed)
+8. Recreate the data with the seed
 
-[//]: # ()
-[//]: # (   ```bash)
+   ```bash
+   $ get http://localhost:3000/api/seed
+   ```   
 
-[//]: # (   $ http://localhost:3000/api/seed)
-
-[//]: # (   ```)
-
-[//]: # ()
 [//]: # (## Run in production)
 
+[//]: # ()
 [//]: # ()
 [//]: # (1. Clone the repository)
 
 [//]: # ()
+[//]: # ()
 [//]: # (   ```bash)
 
+[//]: # ()
 [//]: # (   $ git clone)
 
+[//]: # ()
 [//]: # (    ```)
 
+[//]: # ()
 [//]: # ()
 [//]: # (2. Install NestJS CLI)
 
 [//]: # ()
+[//]: # ()
 [//]: # (    ```bash)
 
+[//]: # ()
 [//]: # (    $ pnpm add -g @nestjs/cli)
 
+[//]: # ()
 [//]: # (    ```)
 
+[//]: # ()
 [//]: # ()
 [//]: # (3. Install dependencies)
 
 [//]: # ()
+[//]: # ()
 [//]: # (    ```bash)
 
+[//]: # ()
 [//]: # (    $ pnpm install)
 
+[//]: # ()
 [//]: # (    ```)
 
+[//]: # ()
 [//]: # ()
 [//]: # (4. Run the database)
 
 [//]: # ()
+[//]: # ()
 [//]: # (    ```bash)
 
+[//]: # ()
 [//]: # (    $ docker-compose up -d)
 
+[//]: # ()
 [//]: # (    ```)
 
+[//]: # ()
 [//]: # ()
 [//]: # (5. Clone the file `.env.example` and rename it to `.env.prod`)
 
 [//]: # ()
+[//]: # ()
 [//]: # (    ```bash)
 
+[//]: # ()
 [//]: # (    $ cp .env.example .env.prod)
 
+[//]: # ()
 [//]: # (    ```)
 
 [//]: # ()
+[//]: # ()
 [//]: # (6. Set the environment variables)
 
+[//]: # ()
 [//]: # (7. Build the image)
 
 [//]: # ()
+[//]: # ()
 [//]: # (    ```bash)
 
+[//]: # ()
 [//]: # (    $ docker compose -f docker-compose.prod.yaml --env-file .env.prod up --build)
 
+[//]: # ()
 [//]: # (    ```)
