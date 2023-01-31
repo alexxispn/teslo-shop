@@ -8,9 +8,9 @@ import {
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Product } from './entities/product.entity';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { PaginationDto } from '../common/dtos/pagination.dto';
+import { Product, ProductImage } from './entities';
 
 @Injectable()
 export class ProductsService {
@@ -19,13 +19,22 @@ export class ProductsService {
   constructor(
     @InjectRepository(Product)
     private readonly productsRepository: Repository<Product>,
+    @InjectRepository(ProductImage)
+    private readonly productImagesRepository: Repository<ProductImage>,
+    private readonly dataSource: DataSource,
   ) {}
 
   async create(createProductDto: CreateProductDto) {
     try {
-      const product = this.productsRepository.create(createProductDto);
+      const { images = [], ...productData } = createProductDto;
+      const product = this.productsRepository.create({
+        ...productData,
+        images: images.map((url) =>
+          this.productImagesRepository.create({ url }),
+        ),
+      });
       await this.productsRepository.save(product);
-      return product;
+      return { ...product, images };
     } catch (error) {
       this.handleDBException(error);
     }
@@ -33,10 +42,15 @@ export class ProductsService {
 
   async findAll(paginationDto: PaginationDto) {
     const { limit = 10, offset = 0 } = paginationDto;
-    return await this.productsRepository.find({
+    const products = await this.productsRepository.find({
       skip: offset,
       take: limit,
+      relations: ['images'],
     });
+    return products.map(({ images, ...productData }) => ({
+      ...productData,
+      images: images.map(({ url }) => url),
+    }));
   }
 
   async findOne(term: string) {
@@ -51,19 +65,46 @@ export class ProductsService {
           title: term.toLowerCase(),
           slug: term,
         })
+        .leftJoinAndSelect('product.images', 'images')
         .getOne();
     }
     if (product) return product;
     throw new NotFoundException(`Product with term ${term} not found`);
   }
 
+  async findOnePlain(term: string) {
+    const { images = [], ...productData } = await this.findOne(term);
+    return {
+      ...productData,
+      images: images.map(({ url }) => url),
+    };
+  }
+
   async update(id: string, updateProductDto: UpdateProductDto) {
-    const product = await this.findOne(id);
-    const updatedProduct = Object.assign(product, updateProductDto);
+    const { images, ...productData } = updateProductDto;
+    const product = await this.productsRepository.preload({
+      id,
+      ...productData,
+    });
+    if (!product)
+      throw new NotFoundException(`Product with id ${id} not found`);
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
     try {
-      await this.productsRepository.save(updatedProduct);
-      return updatedProduct;
+      if (images) {
+        await queryRunner.manager.delete(ProductImage, { product: { id } });
+        product.images = images.map((url) =>
+          this.productImagesRepository.create({ url }),
+        );
+      }
+      await queryRunner.manager.save(product);
+      await queryRunner.commitTransaction();
+      await queryRunner.release();
+      return this.findOnePlain(id);
     } catch (error) {
+      await queryRunner.rollbackTransaction();
+      await queryRunner.release();
       this.handleDBException(error);
     }
   }
@@ -72,6 +113,15 @@ export class ProductsService {
     const product = await this.findOne(id);
     await this.productsRepository.remove(product);
     return { deleted: product };
+  }
+
+  async removeAllProducts() {
+    const query = this.productsRepository.createQueryBuilder('product');
+    try {
+      return await query.delete().where({}).execute();
+    } catch (error) {
+      this.handleDBException(error);
+    }
   }
 
   private handleDBException(error: any) {
