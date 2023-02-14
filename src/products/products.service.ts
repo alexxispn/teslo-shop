@@ -11,6 +11,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { PaginationDto } from '../common/dtos/pagination.dto';
 import { Product, ProductImage } from './entities';
+import { User } from '../auth/entities/user.entity';
 
 @Injectable()
 export class ProductsService {
@@ -24,7 +25,7 @@ export class ProductsService {
     private readonly dataSource: DataSource,
   ) {}
 
-  async create(createProductDto: CreateProductDto) {
+  async create(createProductDto: CreateProductDto, user: User) {
     try {
       const { images = [], ...productData } = createProductDto;
       const product = this.productsRepository.create({
@@ -32,6 +33,7 @@ export class ProductsService {
         images: images.map((url) =>
           this.productImagesRepository.create({ url }),
         ),
+        user,
       });
       await this.productsRepository.save(product);
       return { ...product, images };
@@ -80,7 +82,7 @@ export class ProductsService {
     };
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto) {
+  async update(id: string, updateProductDto: UpdateProductDto, user: User) {
     const { images, ...productData } = updateProductDto;
     const product = await this.productsRepository.preload({
       id,
@@ -98,6 +100,7 @@ export class ProductsService {
           this.productImagesRepository.create({ url }),
         );
       }
+      product.user = user;
       await queryRunner.manager.save(product);
       await queryRunner.commitTransaction();
       await queryRunner.release();
