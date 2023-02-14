@@ -12,7 +12,9 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { FILE_SIZE_LIMIT_BYTES, FILE_TYPES_ALLOWED } from '../common/constants';
 import { fileFilter, fileRenamer } from './helpers';
 import { diskStorage } from 'multer';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('files')
 @Controller('files')
 export class FilesController {
   constructor(private readonly filesService: FilesService) {}
